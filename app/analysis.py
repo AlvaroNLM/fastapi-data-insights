@@ -2,7 +2,6 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import io
-import base64
 
 # Function to analize the csv
 def analyze_csv(file) -> dict:
@@ -17,15 +16,16 @@ def analyze_csv(file) -> dict:
       descriptive statistics, and a base64-encoded correlation plot image.
     """
     # Read the CSV file into a pandas DataFrame
-    df = pd.read_csv(file)
+    df = pd.read_csv(file, index_col = "id")
+    # I drop first column due to it is not relevant for correlations
+    df = df.iloc[:, 1:].copy()
 
     # Collect basic dataset information
     summary = {
         "shape": df.shape,  # Number of rows and columns
         "columns": list(df.columns),  # Column names
         "missing_values": df.isnull().sum().to_dict(),  # Missing values per column
-        "dtypes": df.dtypes.astype(str).to_dict(),  # Data types of each column
-        "describe": df.describe(include='all').to_dict()  # Descriptive stats
+        "dtypes": df.dtypes.astype(str).to_dict()  # Data types of each column
     }
 
     # Prepare correlation matrix plot for numeric columns
@@ -44,10 +44,7 @@ def analyze_csv(file) -> dict:
     plt.close()  # Close plot to free memory
     plot_buffer.seek(0)
 
-    # Encode the plot image in base64 to include in JSON
-    img_base64 = base64.b64encode(plot_buffer.read()).decode('utf-8')
-
     # Add image to the response dictionary
-    summary["correlation_plot"] = img_base64
+    plot_image_bytes = plot_buffer.read()
 
-    return summary
+    return summary, plot_image_bytes

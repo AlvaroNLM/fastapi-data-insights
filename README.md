@@ -1,5 +1,14 @@
-# fastapi-data-insights
+# Fastapi-data-insights
+
 FastAPI-based REST API for automated exploratory data analysis.
+
+## Files
+
+app/
+* ``main.py``: main python script where I define the POSTs.
+* ``analysis.py``: python script where a function processes and returns the information.
+
+## How to execute
 
 1. Create virtual environment (optional but recommended)
 
@@ -18,7 +27,13 @@ FastAPI-based REST API for automated exploratory data analysis.
 
 * Open your browser at: http://localhost:8000/docs
 * Or use curl:
-    * curl -X POST "http://localhost:8000/analyze/" \
+    * for a summary:
+        * curl -X POST "http://localhost:8000/analyze/summary" \
+        * -H "accept: application/json" \
+        * -H "Content-Type: multipart/form-data" \
+        * -F "file=@your_file.csv"
+    * for a plot:
+        * curl -X POST "http://localhost:8000/analyze/correlation-plot" \
         * -H "accept: application/json" \
         * -H "Content-Type: multipart/form-data" \
         * -F "file=@your_file.csv"

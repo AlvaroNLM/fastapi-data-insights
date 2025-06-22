@@ -1,1 +1,5 @@
 data/
+backup/
+app/__pychache__
+test/__pychache__
+.vscode/
