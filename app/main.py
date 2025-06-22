@@ -11,13 +11,13 @@ app = FastAPI(title="CSV Analyzer API")
 @app.post("/analyze/summary")
 async def analyze(file: UploadFile = File(...)):
     """
-    Receives a CSV file via HTTP POST, performs basic analysis, and returns results as JSON.
+    Receives a CSV file via HTTP POST, performs basic analysis, and returns the summary as JSON.
     
     Parameters:
     - file (UploadFile): The uploaded CSV file.
 
     Returns:
-    - JSON object containing dataset statistics, missing values, data types, and a correlation heatmap.
+    - JSON object containing dataset statistics, missing values, and data types.
     """
     
     # Check if the uploaded file is a CSV
@@ -35,13 +35,13 @@ async def analyze(file: UploadFile = File(...)):
 @app.post("/analyze/correlation-plot") 
 async def analyzetoplot(file: UploadFile = File(...)):
     """
-    Receives a CSV file via HTTP POST, performs basic analysis, and returns results as JSON.
+    Receives a CSV file via HTTP POST, performs basic analysis, and returns a correlation heatmap.
     
     Parameters:
     - file (UploadFile): The uploaded CSV file.
 
     Returns:
-    - JSON object containing dataset statistics, missing values, data types, and a correlation heatmap.
+    - A correlation heatmap.
     """
     
     # Check if the uploaded file is a CSV
