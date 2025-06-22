@@ -1,5 +1,4 @@
 data/
 backup/
-app/__pychache__
-test/__pychache__
+app/__pycache__
 .vscode/
